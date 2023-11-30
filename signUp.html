@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" 
+    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="main">
+        <form action="./LoginPage.html" class="box">
+            <div class="heading">
+                <h1>Sign Up</h1>
+            </div>
+            <div class="username">
+                <input type="text" required placeholder="Enter Your Full-Name">
+            </div>
+            <div class="username">
+                <input type="text" required placeholder="Enter unique Username" id="userName">
+                <i class="fa-solid fa-user">
+                </i> 
+            </div>
+            <div class="pass">
+                <input type="password" id="password" required placeholder="Enter Password">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <div class="login-btn">
+                <button>Sign Up</button>
+            </div>
+            <p class="p">Already have an account. <a href="./LoginPage.html">Login</a></p>
+            <div class="alert">
+                <p id="sms">*Enter <span>unique</span> Username</p>
+            </div>
+        </form>
+    </div>
+</body>
+<script>
+    // let userName;
+    // let password;
+    let bttn =document.querySelector("form");
+    bttn.addEventListener("submit",function(e){
+        // e.preventDefault()
+        let username=e.target.userName.value;
+        console.log(username);
+        let password=e.target.password.value;
+
+        let userData=JSON.parse(localStorage.getItem("userDetails")) ?? [];
+        // console.log(userData);
+        let match=userData.find((x)=>
+            x.username === username
+        )
+        if(match){
+            e.preventDefault()
+            popUp();
+            return;
+        }
+
+        addDate(userData,username,password);
+    })
+
+    function addDate(userData,username,password){
+        // console.log("function me hu");
+        userData.push({
+            "username":username,
+            "password":password
+        })
+        localStorage.setItem("userDetails",JSON.stringify(userData))
+        alert("SignUp Successfully :)")
+    }
+    function popUp(){
+        // document.querySelector(".alert").style.display="block"
+        document.querySelector(".alert").style.scale="1"
+        setTimeout(function(){
+            document.querySelector(".alert").style.scale="0"
+        },1000)
+    }
+</script>
+</html>
